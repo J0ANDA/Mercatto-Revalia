@@ -249,7 +249,7 @@ $productos = $product->getAvailableProducts();
                 <?php foreach ($productos_filtrados as $producto): ?>
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
-                            <img src="<?= !empty($producto['foto_url']) ? htmlspecialchars($producto['foto_url']) : '/../img/default.jpeg' ?>" 
+                            <img src="<?= !empty($producto['foto_url']) ? htmlspecialchars($producto['foto_url']) : 'img/default.jpeg' ?>" 
                                  class="card-img-top" alt="<?= htmlspecialchars($producto['nombre']) ?>">
                             <div class="card-body">
                                 <h5 class="card-title"><?= htmlspecialchars($producto['nombre']) ?></h5>
