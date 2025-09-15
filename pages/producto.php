@@ -174,6 +174,59 @@ $is_favorito = $auth->isLoggedIn() ? $product->isFavorito($_SESSION['user_id'], 
     .product-title-container h1 {
         margin: 0;
     }
+    .carousel-indicators {
+        position: static;
+        margin: 0;
+        padding: 0;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .carousel-indicators button {
+        width: 10px !important;
+        height: 10px !important;
+        border-radius: 50%;
+        background-color: #ccc;
+        border: none !important;
+        margin: 0 5px;
+    }
+
+    .carousel-indicators button.active {
+        background-color: #007bff;
+    }
+
+    .thumbnail-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        cursor: pointer;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .thumbnail-img.active {
+        border-color: #007bff;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        background: rgba(0,0,0,0.5);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+        margin: 0 10px;
+    }
+
+    .carousel-control-prev {
+        left: 10px;
+    }
+
+    .carousel-control-next {
+        right: 10px;
+    }
     </style>
 </head>
 <body>
@@ -456,7 +509,6 @@ $is_favorito = $auth->isLoggedIn() ? $product->isFavorito($_SESSION['user_id'], 
         const thumbnails = document.querySelectorAll('.thumbnail-img');
         
         if (carousel && thumbnails.length > 0) {
-            // Hacer las miniaturas clickeables
             thumbnails.forEach((thumbnail, index) => {
                 thumbnail.addEventListener('click', function() {
                     const carouselInstance = new bootstrap.Carousel(carousel);
@@ -464,18 +516,12 @@ $is_favorito = $auth->isLoggedIn() ? $product->isFavorito($_SESSION['user_id'], 
                 });
             });
 
-            // Actualizar el borde de la miniatura activa
             carousel.addEventListener('slide.bs.carousel', function(event) {
                 thumbnails.forEach(thumb => {
-                    thumb.style.border = '2px solid transparent';
+                    thumb.classList.remove('active');
                 });
-                thumbnails[event.to].style.border = '2px solid #007bff';
+                thumbnails[event.to].classList.add('active');
             });
-
-            // Establecer el borde inicial de la primera miniatura
-            if (thumbnails.length > 0) {
-                thumbnails[0].style.border = '2px solid #007bff';
-            }
         }
     });
     </script>
