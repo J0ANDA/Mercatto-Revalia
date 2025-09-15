@@ -338,7 +338,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary"><?=$preferences->translate('publish_product') ?></button>
-                                <a href="../index.php" class="btn btn-outline-secondary"><?=$preferences->translate('cancel') ?></a>
+                                <a href="../index.php" class="btn btn-outline-secondary"><?=$preferences->translate('btn_cancel') ?></a>
                             </div>
                         </form>
                     </div>

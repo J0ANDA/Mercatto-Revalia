@@ -359,16 +359,16 @@ $is_favorito = $auth->isLoggedIn() ? $product->isFavorito($_SESSION['user_id'], 
                 <p class="lead">€<?= number_format($producto['precio'], 2) ?></p>
                 
                 <div class="mb-4">
-                    <h5>Descripción:</h5>
+                    <h5><?=$preferences->translate('description') ?>:</h5>
                     <p><?= nl2br(htmlspecialchars($producto['descripcion'])) ?></p>
                 </div>
 
                 <div class="mb-4">
-                    <h5>Detalles:</h5>
+                    <h5><?=$preferences->translate('product_details') ?>:</h5>
                     <ul class="list-unstyled">
-                        <li><strong>Ubicación:</strong> <?= htmlspecialchars($producto['ciudad']) ?>, <?= htmlspecialchars($producto['provincia']) ?></li>
-                        <li><strong>Stock disponible:</strong> <?= $producto['stock'] ?> unidades</li>
-                        <li><strong>Vendedor:</strong> <?= htmlspecialchars($producto['vendedor_nombre']) ?></li>
+                        <li><strong><?=$preferences->translate('product_location') ?>:</strong> <?= htmlspecialchars($producto['ciudad']) ?>, <?= htmlspecialchars($producto['provincia']) ?></li>
+                        <li><strong><?=$preferences->translate('product_stock') ?>:</strong> <?= $producto['stock'] ?> <?= $producto['stock'] ===1? $preferences->translate('product_unit'): $preferences->translate('product_units') ?></li>
+                        <li><strong><?=$preferences->translate('product_seller') ?>:</strong> <?= htmlspecialchars($producto['vendedor_nombre']) ?></li>
                     </ul>
                 </div>
 
@@ -377,18 +377,18 @@ $is_favorito = $auth->isLoggedIn() ? $product->isFavorito($_SESSION['user_id'], 
                         <input type="hidden" name="action" value="add_to_cart">
                         <div class="row align-items-center">
                             <div class="col-auto">
-                                <label for="cantidad" class="form-label">Cantidad:</label>
+                                <label for="cantidad" class="form-label"><?=$preferences->translate('product_quantity') ?>:</label>
                                 <input type="number" class="form-control" id="cantidad" name="cantidad" 
                                        value="1" min="1" max="<?= $producto['stock'] ?>">
                             </div>
                             <div class="col">
-                                <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
+                                <button type="submit" class="btn btn-primary"><?=$preferences->translate('product_add_cart') ?></button>
                             </div>
                         </div>
                     </form>
                 <?php elseif (!$auth->isLoggedIn()): ?>
                     <div class="alert alert-info">
-                        <a href="login.php">Inicia sesión</a> para comprar este producto
+                        <a href="login.php"><?=$preferences->translate('login_submit') ?></a> <?=$preferences->translate('msg_to_buy') ?>
                     </div>
                 <?php endif; ?>
 

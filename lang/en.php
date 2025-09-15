@@ -54,7 +54,8 @@ return [
     'blank_stock' => 'Please enter a valid quantity',
     'product_seller' => 'Seller',
     'product_units' => 'units',
-    'product_add_car' => 'Add to Car',
+    'product_unit' => 'unit',
+    'product_add_cart' => 'Add to Cart',
     'product_quantity' => 'Quantity',
     'product_add_favorite' => 'Add to favorites',
     'product_remove_favorite' => 'Remove from favorites',
@@ -74,7 +75,6 @@ return [
     'product_photos' => 'Product Photos',
     'photos_msg' => 'You can select multiple photos. Allowed formats: JPG, PNG, GIF',
     'publish_product' => 'Publish Product',
-    'cancel' => 'Cancel',
 
     // Cart translations
     'cart_title' => 'Shopping Cart',
@@ -135,5 +135,6 @@ return [
     'msg_no_favorites' => 'You have no products in your favorites list.',
     'msg_explore_products' => 'Explore products',
     'msg_confirm_delete' => 'Are you sure you want to delete this product?',
-    'btn_cancel' => 'Cancel'
+    'btn_cancel' => 'Cancel',
+    'msg_to_buy'=> 'to buy this product',
 ]; 

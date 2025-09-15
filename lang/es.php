@@ -54,6 +54,7 @@ return [
     'blank_stock' => 'Por favor ingresa una cantidad válida',
     'product_seller' => 'Vendedor',
     'product_units' => 'unidades',
+    'product_unit' => 'unidad',
     'product_add_cart' => 'Agregar al Carrito',
     'product_quantity' => 'Cantidad',
     'product_add_favorite' => 'Añadir a favoritos',
@@ -74,7 +75,6 @@ return [
     'product_photos' => 'Fotos del Producto',
     'photos_msg' => 'Puedes seleccionar múltiples fotos. Formatos permitidos: JPG, PNG, GIF',
     'publish_product' => 'Publicar Producto',
-    'cancel' => 'Cancelar',
 
     // traducciones del carrito
     'cart_title' => 'Carrito de Compras',
@@ -136,4 +136,5 @@ return [
     'msg_explore_products' => 'Explorar productos',
     'msg_confirm_delete' => '¿Estás seguro de que deseas eliminar este producto?',
     'btn_cancel' => 'Cancelar',
+    'msg_to_buy'=> 'para comprar este producto',
 ]; 
