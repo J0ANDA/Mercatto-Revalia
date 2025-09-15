@@ -39,12 +39,19 @@ return [
     'register_go_login' => 'Ir a iniciar sesión',
     
     //traducciones de productos
-    'create_product_title' => 'Publicar Producto',
+    'save_changes' => 'Guardar Cambios',
+    'product_available_sale' => 'Producto disponibles para la venta ?',
+    'product_name'=> 'Nombre del Producto',
+    'blank_product_name' => 'Por favor ingresa el nombre del producto',
+    'description' => 'Descripción',
+    'blank_description' => 'Por favor ingresa una descripción',
+    'create_product_title' => 'Publicar  Nuevo Producto',
     'edit_product_title' => 'Editar Producto',
     'product_details' => 'Detalles',
     'product_description' => 'Descripción',
     'product_location' => 'Ubicación',
     'product_stock' => 'Stock disponible',
+    'blank_stock' => 'Por favor ingresa una cantidad válida',
     'product_seller' => 'Vendedor',
     'product_units' => 'unidades',
     'product_add_cart' => 'Agregar al Carrito',
@@ -52,6 +59,7 @@ return [
     'product_add_favorite' => 'Añadir a favoritos',
     'product_remove_favorite' => 'Quitar de favoritos',
     'product_price' => 'Precio',
+    'blank_price' => 'Por favor ingresa un precio válido',
     'product_actions' => 'Acciones',
     'product_edit' => 'Editar',
     'product_delete' => 'Eliminar',
@@ -59,6 +67,14 @@ return [
     'product_available' => 'Disponible',
     'product_unavailable' => 'No Disponible',
     'product_out_of_stock' => 'Sin Stock',
+    'city' => 'Ciudad',
+    'blank_city' => 'Por favor ingresa una ciudad',
+    'province' => 'Provincia',
+    'blank_province' => 'Por favor ingresa una provincia',
+    'product_photos' => 'Fotos del Producto',
+    'photos_msg' => 'Puedes seleccionar múltiples fotos. Formatos permitidos: JPG, PNG, GIF',
+    'publish_product' => 'Publicar Producto',
+    'cancel' => 'Cancelar',
 
     // traducciones del carrito
     'cart_title' => 'Carrito de Compras',
@@ -94,6 +110,8 @@ return [
     'lang_en' => 'Inglés',
 
     //mensajes
+    'msg_product_updated' => 'Producto actualizado correctamente',
+    'msg_error_product_updated' => 'Error al actualizar el producto',
     'msg_empty_cart_error' => 'Error al vaciar el carrito',
     'msg_delete_product_error' => 'Error al eliminar el producto',
     'msg_update_quantity_error' => 'Error al actualizar la cantidad',

@@ -259,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="card-title text-center mb-4">Publicar Nuevo Producto</h2>
+                        <h2 class="card-title text-center mb-4"><?= $preferences->translate('create_product_title')?></h2>
 
                         <?php if ($error): ?>
                             <div class="alert alert-danger">
@@ -269,76 +269,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <form method="POST" action="crear-producto.php" class="needs-validation" novalidate enctype="multipart/form-data">
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre del Producto</label>
+                                <label for="nombre" class="form-label"><?= $preferences->translate('product_name')?></label>
                                 <input type="text" class="form-control" id="nombre" name="nombre" required
                                        value="<?= isset($_POST['nombre']) ? htmlspecialchars($_POST['nombre']) : '' ?>">
                                 <div class="invalid-feedback">
-                                    Por favor ingresa el nombre del producto
+                                    <?= $preferences->translate('blank_product_name') ?>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label for="descripcion" class="form-label">Descripción</label>
+                                <label for="descripcion" class="form-label"><?= $preferences->translate('description')?></label>
                                 <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required><?= isset($_POST['descripcion']) ? htmlspecialchars($_POST['descripcion']) : '' ?></textarea>
                                 <div class="invalid-feedback">
-                                    Por favor ingresa una descripción
+                                    <?= $preferences->translate('blank_description') ?>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="precio" class="form-label">Precio (€)</label>
+                                    <label for="precio" class="form-label"><?= $preferences->translate('product_price')?> (€)</label>
                                     <input type="number" class="form-control" id="precio" name="precio" 
                                            step="0.01" min="0.01" required
                                            value="<?= isset($_POST['precio']) ? htmlspecialchars($_POST['precio']) : '' ?>">
                                     <div class="invalid-feedback">
-                                        Por favor ingresa un precio válido
+                                        <?= $preferences->translate('blank_price') ?>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="stock" class="form-label">Cantidad Disponible</label>
+                                    <label for="stock" class="form-label"><?=$preferences->translate('product_stock') ?></label>
                                     <input type="number" class="form-control" id="stock" name="stock" 
                                            min="1" required
                                            value="<?= isset($_POST['stock']) ? htmlspecialchars($_POST['stock']) : '' ?>">
                                     <div class="invalid-feedback">
-                                        Por favor ingresa una cantidad válida
+                                        <?=$preferences->translate('blank_stock') ?>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="ciudad" class="form-label">Ciudad</label>
+                                    <label for="ciudad" class="form-label"><?=$preferences->translate('city') ?></label>
                                     <input type="text" class="form-control" id="ciudad" name="ciudad" required
                                            value="<?= isset($_POST['ciudad']) ? htmlspecialchars($_POST['ciudad']) : '' ?>">
                                     <div class="invalid-feedback">
-                                        Por favor ingresa la ciudad
+                                        <?= $preferences->translate('blank_city') ?>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="provincia" class="form-label">Provincia</label>
+                                    <label for="provincia" class="form-label"><?=$preferences->translate('province') ?></label>
                                     <input type="text" class="form-control" id="provincia" name="provincia" required
                                            value="<?= isset($_POST['provincia']) ? htmlspecialchars($_POST['provincia']) : '' ?>">
                                     <div class="invalid-feedback">
-                                        Por favor ingresa la provincia
+                                        <?= $preferences->translate('blank_province') ?>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label for="fotos" class="form-label">Fotos del Producto</label>
+                                <label for="fotos" class="form-label"><?=$preferences->translate('product_photos') ?></label>
                                 <input type="file" class="form-control" id="fotos" name="fotos[]" multiple 
                                        accept="image/jpeg,image/png,image/gif">
                                 <div class="form-text">
-                                    Puedes seleccionar múltiples fotos. Formatos permitidos: JPG, PNG, GIF
+                                    <?=$preferences->translate('photos_msg') ?>
                                 </div>
                             </div>
 
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">Publicar Producto</button>
-                                <a href="../index.php" class="btn btn-outline-secondary">Cancelar</a>
+                                <button type="submit" class="btn btn-primary"><?=$preferences->translate('publish_product') ?></button>
+                                <a href="../index.php" class="btn btn-outline-secondary"><?=$preferences->translate('cancel') ?></a>
                             </div>
                         </form>
                     </div>

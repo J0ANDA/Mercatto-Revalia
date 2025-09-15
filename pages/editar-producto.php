@@ -52,11 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Todos los campos son obligatorios y los valores deben ser válidos';
     } else {
         if ($product->updateProduct($data)) {
-            $_SESSION['mensaje'] = 'Producto actualizado correctamente';
+            $_SESSION['mensaje'] = $preferences->translate('msg_product_updated');
             header('Location: mis-productos.php');
             exit();
         } else {
-            $error = 'Error al actualizar el producto';
+            $error = $preferences->translate('msg_error_product_updated');
         }
     }
 }
@@ -245,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="card-title text-center mb-4">Editar Producto</h2>
+                        <h2 class="card-title text-center mb-4"><?=$preferences->translate('edit_product_title') ?></h2>
 
                         <?php if ($error): ?>
                             <div class="alert alert-danger">
@@ -255,60 +255,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <form method="POST" action="editar-producto.php?id=<?= $id_producto ?>" class="needs-validation" novalidate>
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre del Producto</label>
+                                <label for="nombre" class="form-label"><?=$preferences->translate('product_name') ?></label>
                                 <input type="text" class="form-control" id="nombre" name="nombre" required
                                        value="<?= htmlspecialchars($producto['nombre']) ?>">
                                 <div class="invalid-feedback">
-                                    Por favor ingresa el nombre del producto
+                                    <?=$preferences->translate('blank_product_name') ?>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label for="descripcion" class="form-label">Descripción</label>
+                                <label for="descripcion" class="form-label"><?=$preferences->translate('description') ?></label>
                                 <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required><?= htmlspecialchars($producto['descripcion']) ?></textarea>
                                 <div class="invalid-feedback">
-                                    Por favor ingresa una descripción
+                                    <?=$preferences->translate('blank_description') ?>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="precio" class="form-label">Precio (€)</label>
+                                    <label for="precio" class="form-label"><?=$preferences->translate('product_price') ?> (€)</label>
                                     <input type="number" class="form-control" id="precio" name="precio" 
                                            step="0.01" min="0.01" required
                                            value="<?= htmlspecialchars($producto['precio']) ?>">
                                     <div class="invalid-feedback">
-                                        Por favor ingresa un precio válido
+                                        <?=$preferences->translate('blank_price') ?>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="stock" class="form-label">Cantidad Disponible</label>
+                                    <label for="stock" class="form-label"><?=$preferences->translate('product_stock') ?></label>
                                     <input type="number" class="form-control" id="stock" name="stock" 
                                            min="0" required
                                            value="<?= htmlspecialchars($producto['stock']) ?>">
                                     <div class="invalid-feedback">
-                                        Por favor ingresa una cantidad válida
+                                        <?=$preferences->translate('blank_stock') ?>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="ciudad" class="form-label">Ciudad</label>
+                                    <label for="ciudad" class="form-label"><?=$preferences->translate('city') ?></label>
                                     <input type="text" class="form-control" id="ciudad" name="ciudad" required
                                            value="<?= htmlspecialchars($producto['ciudad']) ?>">
                                     <div class="invalid-feedback">
-                                        Por favor ingresa la ciudad
+                                        <?=$preferences->translate('blank_city') ?>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="provincia" class="form-label">Provincia</label>
+                                    <label for="provincia" class="form-label"><?=$preferences->translate('province') ?></label>
                                     <input type="text" class="form-control" id="provincia" name="provincia" required
                                            value="<?= htmlspecialchars($producto['provincia']) ?>">
                                     <div class="invalid-feedback">
-                                        Por favor ingresa la provincia
+                                        <?=$preferences->translate('blank_province') ?>
                                     </div>
                                 </div>
                             </div>
@@ -316,12 +316,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="disponible" name="disponible"
                                        <?= $producto['disponible'] ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="disponible">Producto disponible para la venta</label>
+                                <label class="form-check-label" for="disponible"><?=$preferences->translate('product_available_sale') ?></label>
                             </div>
 
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                                <a href="mis-productos.php" class="btn btn-outline-secondary">Cancelar</a>
+                                <button type="submit" class="btn btn-primary"><?=$preferences->translate('save_changes') ?></button>
+                                <a href="mis-productos.php" class="btn btn-outline-secondary"><?=$preferences->translate('cancel') ?></a>
                             </div>
                         </form>
                     </div>

@@ -39,12 +39,19 @@ return [
     'register_go_login' => 'Go to login',
 
     // Product translations
-    'create_product_title' => 'Publish Product',
+    'save_changes' => 'Save Changes',
+    'product_available_sale' => 'Product available for sale ?',
+    'product_name'=> 'Product Name',
+    'blank_product_name' => 'Please enter the product name',
+    'description' => 'Description',
+    'blank_description' => 'Please enter a description',
+    'create_product_title' => 'Publish New Product',
     'edit_product_title' => 'Edit Product',
     'product_details' => 'Details',
     'product_description' => 'Description',
     'product_location' => 'Location',
     'product_stock' => 'Available stock',
+    'blank_stock' => 'Please enter a valid quantity',
     'product_seller' => 'Seller',
     'product_units' => 'units',
     'product_add_car' => 'Add to Car',
@@ -52,6 +59,7 @@ return [
     'product_add_favorite' => 'Add to favorites',
     'product_remove_favorite' => 'Remove from favorites',
     'product_price' => 'Price',
+    'blank_price' => 'Please enter a valid price',
     'product_actions' => 'Actions',
     'product_edit' => 'Edit',
     'product_delete' => 'Delete',
@@ -59,6 +67,14 @@ return [
     'product_available' => 'Available',
     'product_unavailable' => 'Unavailable',
     'product_out_of_stock' => 'Out of Stock',
+    'city' => 'City',
+    'blank_city' => 'Please enter a city',
+    'province' => 'Province',
+    'blank_province' => 'Please enter a province',
+    'product_photos' => 'Product Photos',
+    'photos_msg' => 'You can select multiple photos. Allowed formats: JPG, PNG, GIF',
+    'publish_product' => 'Publish Product',
+    'cancel' => 'Cancel',
 
     // Cart translations
     'cart_title' => 'Shopping Car',
@@ -94,6 +110,8 @@ return [
     'lang_en' => 'English',
 
     // Messages
+    'msg_product_updated' => 'Product updated successfully',
+    'msg_error_product_updated' => 'Error updating the product',
     'msg_empty_cart_error' => 'Error emptying the car',
     'msg_delete_product_error' => 'Error deleting the product',
     'msg_update_quantity_error' => 'Error updating quantity',
