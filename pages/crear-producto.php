@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if ($id_producto) {
             // Procesar las imágenes
-            if (!empty($_FILES['fotos']['name'][0])) {
+            if (isset($_FILES['fotos']) && !empty($_FILES['fotos']['name'][0])) {
                 $uploadDir = '../uploads/productos/';
                 if (!file_exists($uploadDir)) {
                     mkdir($uploadDir, 0777, true);
@@ -353,7 +353,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input type="file" class="form-control" id="fotos" name="fotos[]" multiple 
                                        accept="image/jpeg,image/png,image/gif" onchange="previewPhotos(this)">
                                 <div class="form-text">
-                                    <?=$preferences->translate('photos_msg') ?>
+                                    <strong>Instrucciones:</strong><br>
+                                    • Mantén presionada la tecla <kbd>Ctrl</kbd> (Windows) o <kbd>Cmd</kbd> (Mac) mientras haces clic para seleccionar múltiples fotos<br>
+                                    • Máximo 10 fotos, 5MB cada una<br>
+                                    • Formatos permitidos: JPG, PNG, GIF
                                 </div>
                                 
                                 <!-- Preview de las fotos seleccionadas -->
