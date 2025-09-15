@@ -509,6 +509,7 @@ $is_favorito = $auth->isLoggedIn() ? $product->isFavorito($_SESSION['user_id'], 
         const thumbnails = document.querySelectorAll('.thumbnail-img');
         
         if (carousel && thumbnails.length > 0) {
+            // Hacer las miniaturas clickeables
             thumbnails.forEach((thumbnail, index) => {
                 thumbnail.addEventListener('click', function() {
                     const carouselInstance = new bootstrap.Carousel(carousel);
@@ -516,12 +517,18 @@ $is_favorito = $auth->isLoggedIn() ? $product->isFavorito($_SESSION['user_id'], 
                 });
             });
 
+            // Actualizar el borde de la miniatura activa
             carousel.addEventListener('slide.bs.carousel', function(event) {
                 thumbnails.forEach(thumb => {
-                    thumb.classList.remove('active');
+                    thumb.style.border = '2px solid transparent';
                 });
-                thumbnails[event.to].classList.add('active');
+                thumbnails[event.to].style.border = '2px solid #007bff';
             });
+
+            // Establecer el borde inicial de la primera miniatura
+            if (thumbnails.length > 0) {
+                thumbnails[0].style.border = '2px solid #007bff';
+            }
         }
     });
     </script>
