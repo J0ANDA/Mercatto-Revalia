@@ -44,28 +44,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 $fotos = [];
-                foreach ($_FILES['fotos']['tmp_name'] as $key => $tmp_name) {
-                    $fileName = $_FILES['fotos']['name'][$key];
-                    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-                    $uniqueName = uniqid('prod_' . $id_producto . '_') . '.' . $fileExt;
-                    $targetFile = $uploadDir . $uniqueName;
-                    // Modificar la ruta que se guarda en la base de datos
-                    $dbFilePath = 'uploads/productos/' . $uniqueName; // Eliminar el '../'
+                $maxPhotos = 10;
+                $maxFileSize = 5 * 1024 * 1024; // 5MB
+                $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+                
+                // Validar número de fotos
+                if (count($_FILES['fotos']['name']) > $maxPhotos) {
+                    $error = "Máximo {$maxPhotos} fotos permitidas";
+                } else {
+                    foreach ($_FILES['fotos']['tmp_name'] as $key => $tmp_name) {
+                        $fileName = $_FILES['fotos']['name'][$key];
+                        $fileSize = $_FILES['fotos']['size'][$key];
+                        $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                        
+                        // Validar tamaño de archivo
+                        if ($fileSize > $maxFileSize) {
+                            $error = "La foto {$fileName} es demasiado grande. Máximo 5MB por foto.";
+                            break;
+                        }
+                        
+                        // Validar tipo de archivo
+                        if (!in_array($fileExt, $allowedTypes)) {
+                            $error = "El archivo {$fileName} no es una imagen válida. Solo se permiten JPG, PNG y GIF.";
+                            break;
+                        }
+                        
+                        $uniqueName = uniqid('prod_' . $id_producto . '_') . '.' . $fileExt;
+                        $targetFile = $uploadDir . $uniqueName;
+                        $dbFilePath = 'uploads/productos/' . $uniqueName;
 
-                    // Validar tipo de archivo
-                    $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
-                    if (in_array($fileExt, $allowedTypes)) {
                         if (move_uploaded_file($tmp_name, $targetFile)) {
                             $fotos[] = [
                                 'id_producto' => $id_producto,
-                                'url_foto' => $dbFilePath // Guardar la ruta sin '../'
+                                'url_foto' => $dbFilePath
                             ];
+                        } else {
+                            $error = "Error al subir la foto {$fileName}";
+                            break;
                         }
                     }
-                }
 
-                if (!empty($fotos)) {
-                    $product->saveProductPhotos($fotos);
+                    if (!empty($fotos) && empty($error)) {
+                        $product->saveProductPhotos($fotos);
+                    }
                 }
             }
 
@@ -330,9 +351,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="mb-3">
                                 <label for="fotos" class="form-label"><?=$preferences->translate('product_photos') ?></label>
                                 <input type="file" class="form-control" id="fotos" name="fotos[]" multiple 
-                                       accept="image/jpeg,image/png,image/gif">
+                                       accept="image/jpeg,image/png,image/gif" onchange="previewPhotos(this)">
                                 <div class="form-text">
                                     <?=$preferences->translate('photos_msg') ?>
+                                </div>
+                                
+                                <!-- Preview de las fotos seleccionadas -->
+                                <div id="photo-preview" class="mt-3" style="display: none;">
+                                    <h6>Fotos seleccionadas:</h6>
+                                    <div id="preview-container" class="row g-2"></div>
                                 </div>
                             </div>
 
@@ -364,6 +391,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }, false)
             })
     })()
+
+    // Función para mostrar preview de las fotos seleccionadas
+    function previewPhotos(input) {
+        const previewContainer = document.getElementById('preview-container');
+        const photoPreview = document.getElementById('photo-preview');
+        
+        // Limpiar preview anterior
+        previewContainer.innerHTML = '';
+        
+        if (input.files && input.files.length > 0) {
+            photoPreview.style.display = 'block';
+            
+            // Validar número máximo de fotos (máximo 10)
+            if (input.files.length > 10) {
+                alert('Máximo 10 fotos permitidas');
+                input.value = '';
+                photoPreview.style.display = 'none';
+                return;
+            }
+            
+            Array.from(input.files).forEach((file, index) => {
+                // Validar tamaño de archivo (máximo 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(`La foto ${file.name} es demasiado grande. Máximo 5MB por foto.`);
+                    return;
+                }
+                
+                // Validar tipo de archivo
+                if (!file.type.startsWith('image/')) {
+                    alert(`El archivo ${file.name} no es una imagen válida.`);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-3 col-sm-4 col-6';
+                    col.innerHTML = `
+                        <div class="card">
+                            <img src="${e.target.result}" class="card-img-top" style="height: 120px; object-fit: cover;">
+                            <div class="card-body p-2">
+                                <small class="text-muted">${file.name}</small>
+                                <br>
+                                <small class="text-muted">${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+                            </div>
+                        </div>
+                    `;
+                    previewContainer.appendChild(col);
+                };
+                reader.readAsDataURL(file);
+            });
+        } else {
+            photoPreview.style.display = 'none';
+        }
+    }
     </script>
 </body>
 </html>

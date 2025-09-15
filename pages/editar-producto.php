@@ -33,30 +33,41 @@ if (!$producto || $producto['id_vendedor'] != $_SESSION['user_id']) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = [
-        'id_producto' => $id_producto,
-        'id_vendedor' => $_SESSION['user_id'],
-        'nombre' => $_POST['nombre'] ?? '',
-        'descripcion' => $_POST['descripcion'] ?? '',
-        'precio' => floatval($_POST['precio'] ?? 0),
-        'stock' => intval($_POST['stock'] ?? 0),
-        'ciudad' => $_POST['ciudad'] ?? '',
-        'provincia' => $_POST['provincia'] ?? '',
-        'disponible' => isset($_POST['disponible']) ? 1 : 0
-    ];
-
-    // Validaciones básicas
-    if (empty($data['nombre']) || empty($data['descripcion']) || 
-        $data['precio'] <= 0 || $data['stock'] < 0 || 
-        empty($data['ciudad']) || empty($data['provincia'])) {
-        $error = 'Todos los campos son obligatorios y los valores deben ser válidos';
-    } else {
-        if ($product->updateProduct($data)) {
-            $_SESSION['mensaje'] = $preferences->translate('msg_product_updated');
-            header('Location: mis-productos.php');
-            exit();
+    $action = $_POST['action'] ?? '';
+    
+    if ($action === 'delete_photo') {
+        $id_foto = (int)($_POST['id_foto'] ?? 0);
+        if ($product->deleteProductPhoto($id_foto, $id_producto, $_SESSION['user_id'])) {
+            $mensaje = 'Foto eliminada correctamente';
         } else {
-            $error = $preferences->translate('msg_error_product_updated');
+            $error = 'Error al eliminar la foto';
+        }
+    } else {
+        $data = [
+            'id_producto' => $id_producto,
+            'id_vendedor' => $_SESSION['user_id'],
+            'nombre' => $_POST['nombre'] ?? '',
+            'descripcion' => $_POST['descripcion'] ?? '',
+            'precio' => floatval($_POST['precio'] ?? 0),
+            'stock' => intval($_POST['stock'] ?? 0),
+            'ciudad' => $_POST['ciudad'] ?? '',
+            'provincia' => $_POST['provincia'] ?? '',
+            'disponible' => isset($_POST['disponible']) ? 1 : 0
+        ];
+
+        // Validaciones básicas
+        if (empty($data['nombre']) || empty($data['descripcion']) || 
+            $data['precio'] <= 0 || $data['stock'] < 0 || 
+            empty($data['ciudad']) || empty($data['provincia'])) {
+            $error = 'Todos los campos son obligatorios y los valores deben ser válidos';
+        } else {
+            if ($product->updateProduct($data)) {
+                $_SESSION['mensaje'] = $preferences->translate('msg_product_updated');
+                header('Location: mis-productos.php');
+                exit();
+            } else {
+                $error = $preferences->translate('msg_error_product_updated');
+            }
         }
     }
 }
@@ -317,6 +328,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input type="checkbox" class="form-check-input" id="disponible" name="disponible"
                                        <?= $producto['disponible'] ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="disponible"><?=$preferences->translate('product_available_sale') ?></label>
+                            </div>
+
+                            <!-- Sección de gestión de fotos -->
+                            <div class="mb-4">
+                                <h5><?=$preferences->translate('product_photos') ?></h5>
+                                <?php if (!empty($producto['fotos'])): ?>
+                                    <div class="row g-2">
+                                        <?php foreach ($producto['fotos'] as $foto): ?>
+                                            <div class="col-md-3 col-sm-4 col-6">
+                                                <div class="card position-relative">
+                                                    <img src="<?= '../' . htmlspecialchars($foto['url_foto']) ?>" 
+                                                         class="card-img-top" 
+                                                         style="height: 120px; object-fit: cover;"
+                                                         alt="Foto del producto">
+                                                    <div class="card-body p-2">
+                                                        <form method="POST" class="d-inline" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta foto?')">
+                                                            <input type="hidden" name="action" value="delete_photo">
+                                                            <input type="hidden" name="id_foto" value="<?= $foto['id_foto'] ?>">
+                                                            <button type="submit" class="btn btn-sm btn-danger w-100">
+                                                                <span class="material-icons" style="font-size: 16px;">delete</span>
+                                                                Eliminar
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="alert alert-info">
+                                        No hay fotos para este producto.
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                             <div class="d-grid gap-2">

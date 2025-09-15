@@ -234,5 +234,52 @@ class Product {
             return [];
         }
     }
+
+    public function deleteProductPhoto($id_foto, $id_producto, $id_vendedor) {
+        // Verificar que el producto pertenece al vendedor
+        $sql = "SELECT p.id_producto FROM productos p WHERE p.id_producto = :id_producto AND p.id_vendedor = :id_vendedor";
+        
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                ':id_producto' => $id_producto,
+                ':id_vendedor' => $id_vendedor
+            ]);
+            
+            if (!$stmt->fetch()) {
+                return false; // El producto no pertenece al vendedor
+            }
+            
+            // Obtener la URL de la foto para eliminar el archivo
+            $sql = "SELECT url_foto FROM fotos_producto WHERE id_foto = :id_foto AND id_producto = :id_producto";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                ':id_foto' => $id_foto,
+                ':id_producto' => $id_producto
+            ]);
+            $foto = $stmt->fetch();
+            
+            if ($foto) {
+                // Eliminar el archivo físico
+                $filePath = '../' . $foto['url_foto'];
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+                
+                // Eliminar el registro de la base de datos
+                $sql = "DELETE FROM fotos_producto WHERE id_foto = :id_foto AND id_producto = :id_producto";
+                $stmt = $this->pdo->prepare($sql);
+                return $stmt->execute([
+                    ':id_foto' => $id_foto,
+                    ':id_producto' => $id_producto
+                ]);
+            }
+            
+            return false;
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
 }
 ?> 

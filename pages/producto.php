@@ -316,12 +316,13 @@ $is_favorito = $auth->isLoggedIn() ? $product->isFavorito($_SESSION['user_id'], 
                                     <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
                                         <img src="<?= '../' . htmlspecialchars($foto['url_foto']) ?>" 
                                              class="d-block w-100" 
+                                             style="height: 400px; object-fit: cover;"
                                              alt="<?= htmlspecialchars($producto['nombre']) ?> - Imagen <?= $index + 1 ?>">
                                     </div>
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <div class="carousel-item active">
-                                    <img src="../img/default.png" class="d-block w-100" alt="Sin imagen">
+                                    <img src="../img/default.png" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Sin imagen">
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -336,6 +337,36 @@ $is_favorito = $auth->isLoggedIn() ? $product->isFavorito($_SESSION['user_id'], 
                             </button>
                         <?php endif; ?>
                     </div>
+                    
+                    <!-- Indicadores de puntos -->
+                    <?php if (!empty($producto['fotos']) && count($producto['fotos']) > 1): ?>
+                        <div class="carousel-indicators">
+                            <?php foreach ($producto['fotos'] as $index => $foto): ?>
+                                <button type="button" data-bs-target="#productImages" data-bs-slide-to="<?= $index ?>" 
+                                        class="<?= $index === 0 ? 'active' : '' ?>" 
+                                        aria-current="<?= $index === 0 ? 'true' : 'false' ?>" 
+                                        aria-label="Imagen <?= $index + 1 ?>"></button>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <!-- Miniaturas de las fotos -->
+                    <?php if (!empty($producto['fotos']) && count($producto['fotos']) > 1): ?>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                    <?php foreach ($producto['fotos'] as $index => $foto): ?>
+                                        <img src="<?= '../' . htmlspecialchars($foto['url_foto']) ?>" 
+                                             class="thumbnail-img" 
+                                             style="width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 2px solid transparent; border-radius: 8px;"
+                                             data-bs-target="#productImages" 
+                                             data-bs-slide-to="<?= $index ?>"
+                                             alt="Miniatura <?= $index + 1 ?>">
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="col-md-6">
@@ -417,6 +448,35 @@ $is_favorito = $auth->isLoggedIn() ? $product->isFavorito($_SESSION['user_id'], 
             favoriteIcon.style.display = 'block';
             brokenIcon.style.display = 'none';
         });
+    });
+
+    // Funcionalidad para las miniaturas
+    document.addEventListener('DOMContentLoaded', function() {
+        const carousel = document.getElementById('productImages');
+        const thumbnails = document.querySelectorAll('.thumbnail-img');
+        
+        if (carousel && thumbnails.length > 0) {
+            // Hacer las miniaturas clickeables
+            thumbnails.forEach((thumbnail, index) => {
+                thumbnail.addEventListener('click', function() {
+                    const carouselInstance = new bootstrap.Carousel(carousel);
+                    carouselInstance.to(index);
+                });
+            });
+
+            // Actualizar el borde de la miniatura activa
+            carousel.addEventListener('slide.bs.carousel', function(event) {
+                thumbnails.forEach(thumb => {
+                    thumb.style.border = '2px solid transparent';
+                });
+                thumbnails[event.to].style.border = '2px solid #007bff';
+            });
+
+            // Establecer el borde inicial de la primera miniatura
+            if (thumbnails.length > 0) {
+                thumbnails[0].style.border = '2px solid #007bff';
+            }
+        }
     });
     </script>
 </body>
