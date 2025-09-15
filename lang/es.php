@@ -114,6 +114,7 @@ return [
     'msg_error_product_updated' => 'Error al actualizar el producto',
     'msg_empty_cart_error' => 'Error al vaciar el carrito',
     'msg_delete_product_error' => 'Error al eliminar el producto',
+    'msg_deleted_product' => 'Producto eliminado correctamente',
     'msg_update_quantity_error' => 'Error al actualizar la cantidad',
     'msg_update_quantity_success' => 'Cantidad actualizada correctamente',
     'msg_delete_product_success'=> 'Producto eliminado del carrito',
