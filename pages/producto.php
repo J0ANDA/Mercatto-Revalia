@@ -321,7 +321,7 @@ $is_favorito = $auth->isLoggedIn() ? $product->isFavorito($_SESSION['user_id'], 
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <div class="carousel-item active">
-                                    <img src="../img/default.jpeg" class="d-block w-100" alt="Sin imagen">
+                                    <img src="../img/default.png" class="d-block w-100" alt="Sin imagen">
                                 </div>
                             <?php endif; ?>
                         </div>

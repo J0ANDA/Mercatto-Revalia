@@ -230,7 +230,7 @@ unset($_SESSION['mensaje']);
                                                  alt="<?= htmlspecialchars($producto['nombre']) ?>"
                                                  class="me-2" style="width: 50px; height: 50px; object-fit: cover;">
                                         <?php else: ?>
-                                            <img src="../img/default.jpeg" 
+                                            <img src="../img/default.png" 
                                                  alt="Imagen por defecto"
                                                  class="me-2" style="width: 50px; height: 50px; object-fit: cover;">
                                         <?php endif; ?>

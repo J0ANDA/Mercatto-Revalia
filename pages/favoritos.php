@@ -235,7 +235,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 <?php foreach ($favoritos as $producto): ?>
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
-                            <img src="<?= !empty($producto['foto_url']) ? '../' . htmlspecialchars($producto['foto_url']) : '../img/default.jpeg' ?>" 
+                            <img src="<?= !empty($producto['foto_url']) ? '../' . htmlspecialchars($producto['foto_url']) : '../img/default.png' ?>" 
                                  class="card-img-top" 
                                  alt="<?= htmlspecialchars($producto['nombre']) ?>">
                             <div class="card-body">
