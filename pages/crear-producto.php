@@ -378,77 +378,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
     <script>
-    // Validación del formulario del lado del cliente
-    (function () {
-        'use strict'
-        var forms = document.querySelectorAll('.needs-validation')
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
-
-    // Función para mostrar preview de las fotos seleccionadas
-    function previewPhotos(input) {
-        const previewContainer = document.getElementById('preview-container');
-        const photoPreview = document.getElementById('photo-preview');
-        
-        // Limpiar preview anterior
-        previewContainer.innerHTML = '';
-        
-        if (input.files && input.files.length > 0) {
-            photoPreview.style.display = 'block';
-            
-            // Validar número máximo de fotos (máximo 10)
-            if (input.files.length > 10) {
-                alert('Máximo 10 fotos permitidas');
-                input.value = '';
-                photoPreview.style.display = 'none';
-                return;
-            }
-            
-            Array.from(input.files).forEach((file, index) => {
-                // Validar tamaño de archivo (máximo 5MB)
-                if (file.size > 5 * 1024 * 1024) {
-                    alert(`La foto ${file.name} es demasiado grande. Máximo 5MB por foto.`);
-                    return;
-                }
-                
-                // Validar tipo de archivo
-                if (!file.type.startsWith('image/')) {
-                    alert(`El archivo ${file.name} no es una imagen válida.`);
-                    return;
-                }
-                
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const col = document.createElement('div');
-                    col.className = 'col-md-3 col-sm-4 col-6';
-                    col.innerHTML = `
-                        <div class="card">
-                            <img src="${e.target.result}" class="card-img-top" style="height: 120px; object-fit: cover;">
-                            <div class="card-body p-2">
-                                <small class="text-muted">${file.name}</small>
-                                <br>
-                                <small class="text-muted">${(file.size / 1024 / 1024).toFixed(2)} MB</small>
-                            </div>
-                        </div>
-                    `;
-                    previewContainer.appendChild(col);
-                };
-                reader.readAsDataURL(file);
-            });
-        } else {
-            photoPreview.style.display = 'none';
-        }
-    }
+        document.addEventListener('DOMContentLoaded', function() {
+            initFormValidation();
+        });
     </script>
 </body>
 </html>

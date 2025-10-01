@@ -1,57 +1,92 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const productos = document.querySelectorAll('li');
-    productos.forEach(producto => {
-        const producto_id = producto.dataset.productoId;
-        actualizarEstrellas(producto_id);
-    });
-});
+// validar formulario
+function initFormValidation() {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+}
 
-// Función para votar
-function votar(producto_id, valoracion) {
-    axios.post('api/votar.php', { producto_id: producto_id, valoracion: valoracion })
-        .then(response => {
-            if (response.data === false) {
-                alert("Ya has votado este producto.");
-            } else {
-                actualizarEstrellas(producto_id);
+// Preview de fotos
+function previewPhotos(input) {
+    const previewContainer = document.getElementById('preview-container');
+    const photoPreview = document.getElementById('photo-preview');
+    
+    previewContainer.innerHTML = '';
+    
+    if (input.files && input.files.length > 0) {
+        photoPreview.style.display = 'block';
+        
+        if (input.files.length > 10) {
+            alert('Máximo 10 fotos permitidas');
+            input.value = '';
+            photoPreview.style.display = 'none';
+            return;
+        }
+        
+        Array.from(input.files).forEach((file, index) => {
+            if (file.size > 5 * 1024 * 1024) {
+                alert(`La foto ${file.name} es demasiado grande. Máximo 5MB por foto.`);
+                return;
             }
-        })
-        .catch(error => {
-            console.error(error);
+            
+            if (!file.type.startsWith('image/')) {
+                alert(`El archivo ${file.name} no es una imagen válida.`);
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const col = document.createElement('div');
+                col.className = 'col-md-3 col-sm-4 col-6';
+                col.innerHTML = `
+                    <div class="card position-relative">
+                        <img src="${e.target.result}" 
+                             class="card-img-top" 
+                             style="height: 120px; object-fit: cover;"
+                             alt="Vista previa">
+                        <div class="card-body p-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="removePreview(this, ${index})">
+                                    <span class="material-icons" style="font-size: 16px;">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                previewContainer.appendChild(col);
+            };
+            reader.readAsDataURL(file);
         });
+    } else {
+        photoPreview.style.display = 'none';
+    }
 }
 
-// Función para eliminar el voto
-function eliminarVoto(producto_id) {
-    axios.post('api/eliminarVoto.php', { producto_id: producto_id })
-        .then(response => {
-            actualizarEstrellas(producto_id);
-        })
-        .catch(error => {
-            console.error(error);
-        });
-}
-
-// Actualizar las estrellas y la media de votos
-function actualizarEstrellas(producto_id) {
-    axios.get(`api/pintarEstrellas.php?producto_id=${producto_id}`)
-        .then(response => {
-            const estrellasDiv = document.getElementById(`estrellas-${producto_id}`);
-            const ratingInfoDiv = document.getElementById(`rating-info-${producto_id}`);
-            const media = response.data.media;
-            const votos = response.data.votos;
-
-            // Mostrar las estrellas vacías o rellenas
-            estrellasDiv.innerHTML = `<div class="stars"> 
-                ${[1, 2, 3, 4, 5].map(star => `
-                    <span class="star ${star <= media ? 'active' : ''}" onclick="votar(${producto_id}, ${star})">★</span>
-                `).join('')}
-            </div>`;
-
-            // Mostrar la media y el número de votos
-            ratingInfoDiv.innerHTML = `Valoración: ${media} estrellas (${votos} votos)`;
-        })
-        .catch(error => {
-            console.error(error);
-        });
+//Eliminar fotos desde la vista previa
+function removePreview(button, index) {
+    const input = document.getElementById('fotos');
+    const dt = new DataTransfer();
+    const { files } = input;
+    
+    for(let i = 0; i < files.length; i++) {
+        if(i !== index) {
+            dt.items.add(files[i]);
+        }
+    }
+    
+    input.files = dt.files;
+    button.closest('.col-md-3').remove();
+    
+    if(input.files.length === 0) {
+        document.getElementById('photo-preview').style.display = 'none';
+    }
 }
