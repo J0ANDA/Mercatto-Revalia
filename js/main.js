@@ -25,7 +25,7 @@ function previewPhotos(input) {
         photoPreview.style.display = 'block';
         
         if (input.files.length > 10) {
-            alert('Máximo 10 fotos permitidas');
+            alert('10 img max.');
             input.value = '';
             photoPreview.style.display = 'none';
             return;
@@ -33,12 +33,12 @@ function previewPhotos(input) {
         
         Array.from(input.files).forEach((file, index) => {
             if (file.size > 5 * 1024 * 1024) {
-                alert(`La foto ${file.name} es demasiado grande. Máximo 5MB por foto.`);
+                alert(`La foto ${file.name} Img 5MB max.`);
                 return;
             }
             
             if (!file.type.startsWith('image/')) {
-                alert(`El archivo ${file.name} no es una imagen válida.`);
+                alert(`El archivo ${file.name} Error.`);
                 return;
             }
             

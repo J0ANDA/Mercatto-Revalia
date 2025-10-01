@@ -358,7 +358,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </div>
                                 <?php else: ?>
                                     <div class="alert alert-info">
-                                        No hay fotos para este producto.
+                                        <?=$preferences->translate('no_photos') ?>
                                     </div>
                                 <?php endif; ?>
                             </div>

@@ -351,12 +351,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="mb-3">
                                 <label for="fotos" class="form-label"><?=$preferences->translate('product_photos') ?></label>
                                 <input type="file" class="form-control" id="fotos" name="fotos[]" multiple 
-                                       accept="image/jpeg,image/png,image/gif" onchange="previewPhotos(this)">
+                                       accept="image/jpeg,image/png/gif" onchange="previewPhotos(this)">
                                 <div class="form-text">
-                                    <strong>Instrucciones:</strong><br>
-                                    • Mantén presionada la tecla <kbd>Ctrl</kbd> (Windows) o <kbd>Cmd</kbd> (Mac) mientras haces clic para seleccionar múltiples fotos<br>
-                                    • Máximo 10 fotos, 5MB cada una<br>
-                                    • Formatos permitidos: JPG, PNG, GIF
+                                    <strong><?=$preferences->translate('Instructions') ?>:</strong><br>
+                                    <?=$preferences->translate('hold_down') ?><br>
+                                    <?=$preferences->translate('max_img') ?><br>
+                                    <?=$preferences->translate('formats_permitted') ?>
                                 </div>
                                 
                                 <!-- Preview de las fotos seleccionadas -->

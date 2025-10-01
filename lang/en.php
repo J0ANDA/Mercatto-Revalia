@@ -39,6 +39,11 @@ return [
     'register_go_login' => 'Go to login',
 
     // Product translations
+    'no_photos' => 'There are no photos for this product.',
+    'Instructions' => 'Instructions',
+    'hold_down'=> '• Hold down "Ctrl" (or "Cmd" on Mac) to select multiple images.',
+    'max_img' => '• Maximum 10 photos, 5MB each.',
+    'formats_permitted' => '• Allowed formats: JPEG, JPG, PNG, GIF',
     'save_changes' => 'Save Changes',
     'product_available_sale' => 'Product available for sale ?',
     'product_name'=> 'Product Name',

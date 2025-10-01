@@ -39,6 +39,11 @@ return [
     'register_go_login' => 'Ir a iniciar sesión',
     
     //traducciones de productos
+    'no_photos' => 'No hay fotos para este producto.',
+    'Instructions' => 'Instrucciones',
+    'hold_down'=> '• Mantener presionado "Ctrl" (o "Cmd" en Mac) para seleccionar múltiples imágenes.',
+    'max_img' => '• Máximo 10 fotos, 5MB cada una.',
+    'formats_permitted' => '• Formatos permitidos: JPEG, JPG, PNG, GIF',
     'save_changes' => 'Guardar Cambios',
     'product_available_sale' => 'Producto disponibles para la venta ?',
     'product_name'=> 'Nombre del Producto',
