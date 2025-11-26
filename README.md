@@ -1,5 +1,4 @@
-# Proyecto-Final-DAW
-Proyecto final DAW aplicación web de compra y venta de productos 
+# Mercatto Revalia 
 
 Manual de Usuario
 
